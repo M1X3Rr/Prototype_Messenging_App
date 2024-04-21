@@ -1,0 +1,90 @@
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:avatarview="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+             x:Class="Zad3.MainPage">
+
+    <Grid>
+        <!-- Master -->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Chats List -->
+        <Frame Background="Transparent">
+            <StackLayout Grid.Column="0" BackgroundColor="Transparent"
+                         HorizontalOptions="Start">
+                <CollectionView x:Name="ChatsView" SelectionMode="Single" 
+                                WidthRequest="400" HorizontalOptions="Start" >
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Vertical" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout Padding="10, 5">
+                                <Frame BorderColor="Transparent">
+                                    <Grid ColumnDefinitions="8*, 30*" ColumnSpacing="0">
+                                        <avatarview:SfAvatarView 
+                                                ContentType="Custom"
+                                                ImageSource="dotnet_bot.png"
+                                                HorizontalOptions="Start"   
+                                                HeightRequest="50"
+                                                WidthRequest="50"
+                                                CornerRadius="50"
+                                                Grid.Column="0"
+                                                />
+                                        <Frame Grid.Column="1" BackgroundColor="Transparent" BorderColor="CadetBlue">
+                                            <StackLayout>
+                                                <Label Text="{Binding Name}" FontSize="Subtitle" HorizontalOptions="Start" />
+                                                <Label Text="{Binding LastMessage}" FontSize="Body" HorizontalOptions="Start" />
+                                            </StackLayout>
+                                        </Frame>
+                                    </Grid>
+                                </Frame>
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </StackLayout>
+        </Frame>
+
+        <!-- Detail -->
+        <StackLayout x:Name="ChatsLayout" Grid.Column="1" HorizontalOptions="FillAndExpand"  MaximumWidthRequest="1200">
+            <Frame x:Name="ChatHeaderFrame" CornerRadius = "0">
+                <Grid>
+                
+                    <!-- Chat Header -->
+                    <avatarview:SfAvatarView 
+                        x:Name="avatarView"
+                        ContentType="Custom"
+                        ImageSource="dotnet_bot.png"
+                        HorizontalOptions="Start"   
+                        HeightRequest="50"
+                        WidthRequest="50"
+                        CornerRadius="50">
+                        <avatarview:SfAvatarView.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="TapGestureRecognizer"/>
+                        </avatarview:SfAvatarView.GestureRecognizers>
+                    </avatarview:SfAvatarView>
+
+                    <Label x:Name="SelectedChatLabel" FontSize="Title" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" />
+                </Grid>
+            </Frame>
+            
+            <!-- Chat Messages -->
+            <ScrollView>
+                <StackLayout x:Name="ChatMessagesLayout">
+                    <!-- Messages will be added here -->
+                </StackLayout>
+            </ScrollView>
+        </StackLayout>
+
+        <!-- Chat Input -->
+        <StackLayout Grid.Column="1"
+                     VerticalOptions="End" Margin="20" Orientation="Horizontal" MaximumWidthRequest="1100">
+            <Entry x:Name="MessageEntry" Placeholder="Type a message..." PlaceholderColor="Sienna" HorizontalOptions="FillAndExpand" />
+            <Button Text="Send" Clicked="SendMessage_Clicked"/>
+        </StackLayout>
+    </Grid>
+
+</ContentPage>
